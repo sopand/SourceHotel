@@ -1,0 +1,44 @@
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  main:
+    allow-circular-references: true
+  thymeleaf:
+    enabled: true
+    prefix: classpath:templates/
+    suffix: .html
+    cache: true
+    encoding: UTF-8
+    mode: HTML
+    check-template: true
+    check-template-location: true
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/hotel?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: 1111
+      connection-test-query: SELECT NOW() FROM dual
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+server:
+  port: 8087
+ 
+# JWT
+jwt:
+  #header:Authorization
+  secret:aGV2dG9uLXB5cm9uLXB5cm9uLWhldi1weXItZ29vZC1kZXZsb3Blci1oZXZ0b24tcHlyb24tcHlyb24taGV2LXB5ci1nb29kLWRldmxvcGVyLQ==
+  #token-expire:86400
+  #토큰의 암호화 복호화를 위한 secret key로, 이후 HS256알고리즘을 사용하기 위해 256비트 보다 커야한다.
+                                                           # 알파벳은 한 단어당 8비트 이므로 32글자 이상이면 된다.
+
+file:
+  roomUpimg: C:/img/
+  roomfolder: file:///img/

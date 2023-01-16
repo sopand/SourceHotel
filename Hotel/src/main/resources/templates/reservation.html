@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<title>Document</title>
+<link th:href="@{/css/header.css}" rel="stylesheet" />
+<link th:href="@{/css/footer.css}" rel="stylesheet" />
+<link th:href="@{/css/reservation.css}" rel="stylesheet" />
+<link th:href="@{/css/reset2.css}" rel="stylesheet" />
+<link th:href="@{/css/reset.css}" rel="stylesheet" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script>
+       $(function() {
+	   	 let token = $("meta[name='_csrf']").attr("content");
+	     let header = $("meta[name='_csrf_header']").attr("content");
+	    $("#modal_btn").click(function() {
+			     let option = [];
+			     let room_num=$("input[name=room_num]").val();
+			   
+			     $("input[name=option]:checked").each(function(i) {
+					      option.push($(this).val());
+				         });
+			
+			     $.ajax({
+				  type : "POST",
+				  traditional: true,
+				  url : "/option/",
+				  data : {
+				         room_num,room_num,
+				         option:option
+				         
+				  },
+				  beforeSend : function(xhr) { /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				         xhr.setRequestHeader(header,
+						   token);
+				  },
+				  success : function(result) {
+
+				  },
+				  error : function(e) {
+				         alert('에러');
+
+				  }
+			     });
+		        });
+
+	    $(document).mouseup(function(e) {
+		 if ($(".modal_form").has(e.target).length === 0) {
+		        $(".modal_form").hide();
+		 }
+	    });
+
+	    $(document).keydown(function(e) {
+		 //keyCode 구 브라우저, which 현재 브라우저
+		 var code = e.keyCode || e.which;
+
+		 if (code == 27) { // 27은 ESC 키번호
+		        $('.modal_form').hide();
+		 }
+	    });
+
+	    $("#modal_open").click(function() {
+		 $(".modal_form").css("display", "flex");
+	    });
+
+	    let width = $('.slider li').width();
+	    $("#next_btn").click(function() {
+		 $('.slider').delay(0).animate({
+		        marginLeft : '+=' + width
+		 }, 100, function() {
+		        $('.slider li:last').prependTo('.slider')
+		        $('.slider').css('margin-left', '0');
+		 });
+	    });
+
+	    $("#prev_btn").click(function() {
+		 $('.slider').delay(0).animate({
+		        marginRight : '+=' + width
+		 }, 100, function() {
+		        $('.slider li:first').appendTo('.slider')
+		        $('.slider').css('margin-right', '0');
+		 });
+	    });
+
+	    $("input[type=checkbox][name=option]").change(function() {
+		 let value = $(this).val();
+
+		 if ($(this).is(':checked')) {
+		        $('.' + value).css("opacity", "0.8");
+		        $('.' + value).css("border", "3px solid #e2e2e2");
+		 } else {
+		        $('.' + value).css("opacity", "1.0");
+		        $('.' + value).css("border", "0");
+		 }
+
+	    });
+
+       });
+</script>
+</head>
+
+<body>
+	<div id="container">
+		<header th:replace="header :: header"> </header>
+
+		<main id="reservation_main_con">
+			<div id="reservation_box">
+				<form action="#" class="reservation_form">
+					<div id="reservation_img">
+						<button id="prev_btn">
+							<span class="material-symbols-outlined"> arrow_back_ios </span>
+						</button>
+						<input type="hidden" name="room_num" th:value="${room.room_num}">
+						<ul class="slider">
+							<li th:each="img ,stat :${roomimg}">
+							<img th:src="@{/img/}+${roomimg[stat.index]}" th:class="sli_img" >
+							</li>
+						</ul>
+
+						<button id="next_btn">
+							<span class="material-symbols-outlined"> arrow_forward_ios </span>
+						</button>
+					</div>
+
+					<div id="reservation_tag">
+						<label class="reservation_tag_text">
+							<span th:text="|지점위치:${room.room_location}|">지역명</span>
+							<input type="hidden" name="room_location" th:value="${room.room_location}">
+						</label>
+						<label class="reservation_tag_text">
+							<span th:text="|호실명:${room.room_name}|">이름</span>
+							<input type="hidden" name="room_name" th:value="${room.room_name}">
+						</label>
+						<label class="reservation_tag_text">
+							<span th:text="|최대인원:${room.room_person}|">최대인원</span>
+							<input type="hidden" name="room_person" th:value="${room.room_person}">
+						</label>
+						<label class="reservation_tag_text">
+							<span th:text="|침대타입:${room.room_type}|">타입</span>
+							<input type="hidden" name="room_bed" th:value="${room.room_type}">
+						</label>
+
+						<label class="reservation_tag_text" >
+							<span>체크인시간</span>
+						</label>
+						<label class="reservation_tag_text">
+							<span>체크아웃시간</span>
+						</label>
+						<label class="reservation_tag_text">
+							<span th:text="|가격:${room.room_price}|">가격</span>
+							<input type="hidden" name="room_price" th:value="${room.room_price}">
+						</label>
+
+
+
+						<div class="reservation_btn">
+							<button id="modal_open" type="button">부가서비스 추가</button>
+							<button>예약하기</button>
+						</div>
+
+
+					</div>
+
+				</form>
+
+
+
+
+			</div>
+			<!--  =====================MODAL========================== -->
+			<form action="" method="post" class="modal_form">
+				<div class="modal_chkbox">
+					<label class="opt_food">
+						<img src="/img/food.jpg">
+						<span>조식</span>
+						<input type="checkbox" name="option" value="opt_food" style="display: none;" readonly>
+					</label>
+					<label class="opt_spa">
+						<img src="/img/spa.jpg">
+						<span>스파</span>
+						<input type="checkbox" name="option" value="opt_spa" style="display: none;" readonly>
+					</label>
+				</div>
+				<div class="modal_chkbox">
+					<label class="opt_dining">
+						<img src="/img/dining.jpg">
+						<span>다이닝</span>
+						<input type="checkbox" name="option" value="opt_dining" style="display: none;" readonly>
+					</label>
+					<label class="opt_health">
+						<img src="/img/health.jpg">
+						<span>헬스</span>
+						<input type="checkbox" name="option" value="opt_health" style="display: none;" readonly>
+					</label>
+				</div>
+				<div class="modal_chkbox">
+					<label class="opt_parking">
+						<img src="/img/parking.jpg">
+						<span>발렛 서비스</span>
+						<input type="checkbox" name="option" value="opt_parking" style="display: none;" readonly>
+					</label>
+					<label class="opt_bed">
+						<img src="/img/singlebed.jpg">
+						<span>침대 추가</span>
+						<input type="checkbox" name="option" value="opt_bed" style="display: none;" readonly>
+					</label>
+				</div>
+				<div class="modal_chkbox">
+					<label class="opt_poter">
+						<img src="/img/bag.jpg">
+						<span>수화물 서비스</span>
+						<input type="checkbox" name="option" value="opt_poter" style="display: none;" readonly>
+					</label>
+					<label class="opt_cleaning">
+						<img src="/img/cleaning.jpg">
+						<span>세탁서비스</span>
+						<input type="checkbox" name="option" value="opt_cleaning" style="display: none;" readonly>
+					</label>
+				</div>
+				<div class="modal_btn">
+					<button type="button" id="modal_btn">서비스 추가</button>
+				</div>
+			</form>
+			<!--  =====================MODAL========================== -->
+		</main>
+
+		<footer th:replace="footer ::footer"></footer>
+
+	</div>
+</body>
+
+</html>

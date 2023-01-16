@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link th:href="@{/css/header.css}" rel="stylesheet" />
+<link th:href="@{/css/footer.css}" rel="stylesheet" />
+<link th:href="@{/css/addroom.css}" rel="stylesheet" />
+<link th:href="@{/css/reset2.css}" rel="stylesheet" />
+<link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+
+        $(function () {
+            $("input[name=room_location]").change(function () {
+                let a = $(this).attr("id");
+                $("." + a).css("opacity", "0.6");
+                if (a == "location1") {
+                    $(".location2").css("opacity", "1");
+                    $(".location3").css("opacity", "1");
+                } else if (a == "location2") {
+                    $(".location1").css("opacity", "1");
+                    $(".location3").css("opacity", "1");
+                } else {
+                    $(".location2").css("opacity", "1");
+                    $(".location1").css("opacity", "1");
+                }
+            });
+
+            $("input[name=room_type]").change(function () {
+                let a = $(this).attr("id");
+                $("." + a).css("opacity", "0.6");
+                if (a == "bed_tag1") {
+                    $(".bed_tag2").css("opacity", "1");
+                } else if (a == "bed_tag2") {
+                    $(".bed_tag1").css("opacity", "1");
+                }
+            });
+            $('input[type=file]').change(function () {
+                let a = $(this).attr("id");
+                setImageFromFile(this, '.' + a);
+                $("." + a).show();
+            });
+
+        });
+
+        function setImageFromFile(input, expression) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(expression).attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <div id="container">
+       		<header th:replace="header :: header"> </header>
+
+
+        <main id="addroom_main_con">
+              <form th:action="@{/room/}" th:method="POST" class="room_form" enctype="multipart/form-data">
+                <div class="location_box">
+                    <h2>지역 : </h2>
+                    <label class="location1 location">
+                        <span>서울</span>
+                        <img src="/img/imgslide2.jpg" alt="">
+                        <input style="display:none;" type="radio" name="room_location" value="서울" id="location1">
+                    </label>
+                    <label class="location2 location">
+                        <span>인천</span>
+                        <img src="/img/imgslide3.jpg" alt="">
+                        <input style="display:none;" type="radio" name="room_location" value="인천" id="location2">
+                    </label>
+                    <label class="location3 location">
+                        <span>부산</span>
+                        <img src="/img/imgslide1.jpg" alt="">
+                        <input style="display:none;" type="radio" name="room_location" value="부산" id="location3">
+                    </label>
+                </div>
+
+                <div class="bed_type">
+                    <h2>침대 : </h2>
+                    <label class="bed_tag1 bed_tag">
+                        <span>싱글</span>
+                        <img src="/img/singlebed.jpg" alt="">
+                        <input style="display:none;" type="radio" name="room_type" value="single" id="bed_tag1">
+                    </label>
+                    <label class="bed_tag2 bed_tag">
+                        <span>더블</span>
+                        <img src="/img/double.jpg" alt="">
+                        <input style="display:none;" type="radio" name="room_type" value="double" id="bed_tag2">
+                    </label>
+                </div>
+
+
+                <div class="img_box">
+                    <h2>객실 이미지 등록</h2>
+                    <label class="img_file">
+                        <span>클릭시 이미지추가</span>
+                        <img src="" class="view1" style="display: none;">
+                        <input type="file" style="display: none;" name="file" id="view1">
+                    </label>
+                    <label class="img_file">
+                        <span>클릭시 이미지추가</span>
+                        <img src="" class="view2" style="display: none;">
+                        <input type="file" style="display: none;" name="file" id="view2">
+                    </label>
+                    <label class="img_file">
+                        <span>클릭시 이미지추가</span>
+                        <img src="" class="view3" style="display: none;">
+                        <input type="file" style="display: none;" name="file" id="view3">
+                    </label>
+                    <label class="img_file">
+                        <span>클릭시 이미지추가</span>
+                        <img src="" class="view4" style="display: none;">
+                        <input type="file" style="display: none;" name="file" id="view4">
+                    </label>
+                    <label class="img_file">
+                        <span>클릭시 이미지추가</span>
+                        <img src="" class="view5" style="display: none;">
+                        <input type="file" style="display: none;" name="file" id="view5">
+                    </label>
+                </div>
+
+                <div class="add_text_box">
+                    <label class="text_tag">
+                        <span>객실 호수: </span>
+                        <input text="text" name="room_name" id="room_name" placeholder="ex)304">
+                    </label>
+
+                    <label class="text_tag">
+                        <span>기본 가격: </span>
+                        <input text="text" name="room_price" id="room_price" placeholder="ex)300000">
+                    </label>
+                    <label class="text_tag">
+                        <span>최대 인원: </span>
+                        <select name="room_person" id="room_person">
+                            <option value="1">1명</option>
+                            <option value="2">2명</option>
+                            <option value="3">3명</option>
+                            <option value="4">4명</option>
+                        </select>
+                    </label>
+                </div>
+
+                <button id="add_roombtn" type="submit">객실등록</button>
+            </form>
+        </main>
+	<footer th:replace="footer ::footer"></footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link th:href="@{/css/header.css}" rel="stylesheet" />
+<link th:href="@{/css/footer.css}" rel="stylesheet" />
+<link th:href="@{/css/index.css}" rel="stylesheet" />
+<link th:href="@{/css/slide.css}" rel="stylesheet" />
+<link th:href="@{/css/reset2.css}" rel="stylesheet" />
+<link th:href="@{/css/reset.css}" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	$(function() {
+		let width = $('.slider li').width();
+		let now_utc = Date.now()
+		let timeOff = new Date().getTimezoneOffset() * 60000;
+		let today = new Date(now_utc - timeOff).toISOString().split("T")[0];
+		$("#res_checkin").attr("min", today);
+		$("#res_checkout").attr("min", today);
+		$("#next_btn").click(function() {
+			$('.slider').delay(0).animate({
+				marginLeft : '+=' + width
+			}, 1000, function() {
+				$('.slider li:last').prependTo('.slider')
+				$('.slider').css('margin-left', '0');
+			});
+		});
+
+		$("#prev_btn").click(function() {
+			$('.slider').delay(0).animate({
+				marginRight : '+=' + width
+			}, 1000, function() {
+				$('.slider li:first').appendTo('.slider')
+				$('.slider').css('margin-right', '0');
+			});
+		});
+
+	});
+</script>
+</head>
+
+<body>
+	<div id="container">
+		<header th:replace="header :: header"> </header>
+
+		<main id="index_main_con">
+			<div th:replace="slide :: slide"></div>
+			
+			<div class="reservation_box">
+				<form th:action="@{/rooms/}" method="get" class="reservation_form">
+					<div class="city_form">
+						<span>지점 선택</span> <select name="res_city" class="city">
+							<option value="서울">서울</option>
+							<option value="인천">인천</option>
+							<option value="부산">부산</option>
+						</select>
+					</div>
+					<div class="checkin_form">
+						<span>체크인 날짜</span> <input type="date" name="res_checkin" id="res_checkin"
+							class="date">
+					</div>
+					<div class="checkout_form">
+						<span>체크아웃 날짜</span> <input type="date" name="res_checkout" id="res_checkout"
+							class="date">
+					</div>					
+					<div class="sel_form">
+						<span>성인</span> <select name="res_adult" class="sel1">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+						</select>
+					</div>
+
+					<div class="sel_form">
+						<span>어린이</span> <select name="res_child" class="sel1">
+							<option value="0">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+						</select>
+					</div>
+					<div class="sel_form">
+						<span>유아</span> <select name="res_baby" class="sel1">
+							<option value="0">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+						</select>
+					</div>
+
+					<div class="fav_btn_box">
+						<button type="submit">검색</button>
+					</div>
+				</form>
+
+			</div>
+			
+			
+			<div class="main_img">
+				<div class="img1"><img  src=""></div>
+				<div class="img2"><img  src=""></div>
+				<div class="img3"><img  src=""></div>
+				<div class="img4"><img  src=""></div>
+				
+				
+			</div>
+			
+
+		</main>
+
+		<footer th:replace="footer ::footer"></footer>
+
+	</div>
+</body>
+
+</html>

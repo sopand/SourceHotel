@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link th:href="@{/css/header.css}" rel="stylesheet" />
+<link th:href="@{/css/footer.css}" rel="stylesheet" />
+<link th:href="@{/css/findroom.css}" rel="stylesheet" />
+<link th:href="@{/css/reset2.css}" rel="stylesheet" />
+<link th:href="@{/css/reset.css}" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    window.onload = () => {
+	 findAllPost();
+    }
+
+
+    // 게시글 리스트 조회
+    function findAllPost() {
+
+      const list =/*[[${roomlist.list}]]*/"";// PagingResponse의 멤버인 List<T> 타입의 list를 의미
+      if ( !list.length ) { //리스트가 비어있는 경우, "검색 결과가 없다"는 메시지를 행에 출력
+    	  document.getElementById('findroom_box').innerHTML = '<td colspan="6"><div className="no_data_msg">검색된 결과가 없습니다.</div></td>';
+        drawPage(); //페이지네이션 HTML을 제거(초기화)한 후 로직을 종료합니다.
+      }
+
+      const pagination = /*[[${roomlist.pagination}]]*/"";//PagingResponse의 멤버인 pagination을 의미
+      const params =/*[[${params}]]*/""; // @ModelAttribute로 바로 1ㄷ1 맵핑시킨 값을 받아옴
+      let num = pagination.totalRecordCount - ((params.page - 1) * params.recordSize); // 전체 데이터의 갯수 - ((현재페이지-1)*한페이지의 행의갯수)      
+																						// ex) 100 - ((1-1)*10) = 100
+      drawList(list);
+      drawPage(pagination, params);
+    }
+
+
+    // 리스트 HTML draw
+    // 제품 리스트를 출력
+    function drawList(list, num) {
+
+      let html = '';
+		                    
+      list.forEach(row => { // list 의 갯수만큼 반복진행 row 라는 변수명으로 list명을 대체함 화살표함수
+        html += `
+		<div class="findroom_img">
+			<a href="#" class="findroom_imghref">
+				<img src="/img/${row.room_img}" class="sli_img" loading="lazy">
+			</a>
+			<a class="findroom_href" href="/rooms/${row.room_num}">
+				<div class="findroom_text">
+					<span>${row.room_name}</span>
+					<span>최대 인원:${row.room_person}명</span>
+					<span>침대:${row.room_type}베드</span>
+					<span>PRICE:${row.room_price}원</span>
+				</div>
+			</a>
+		</div>              
+        `;
+      })		
+      document.getElementById('findroom_box').innerHTML = html; // #list에 해당 html을 대체해서 넣어준다.
+    }
+
+
+    // 페이지 HTML draw  하단의 버튼에 해당하는 스크립트로 페이징의 핵심
+    function drawPage(pagination, params) {
+		//SearchDto의 기본 Default값을 바탕으로 mybatis의 count를 같이 받아와 계산후 저장시켜둔 pagingnation과 SearchDto를 받아옴
+      if ( !pagination || !params ) {
+    	  // pagination, params가 존재하지 않는다면 해당 스크립트를 출력
+        document.querySelector('.paging').innerHTML = '';
+        throw new Error('Missing required parameters...');
+      }
+
+      let html = '';
+      
+      // 첫 페이지, 이전 페이지
+      
+      if (pagination.existPrevPage) { // 현재페이지에서 보이는 스타트페이지가 1이 아닐경우 해당 스크립트의 HTML이 만들어진다. ( <  이전 페이지 ) 
+        html += `
+            <a href="javascript:void(0);" onclick="movePage(1)" class="page_bt first">첫 페이지</a>
+            <a href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})" class="page_bt prev">이전 페이지</a>
+        `;
+      }
+
+      // 페이지 번호
+      html += '<p>';
+      		// 1,2,3,4,5~~~ 페이지의 번호를 만들어내는 구문
+      for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+        html += (i !== params.page)
+                ? `<a href="javascript:void(0);" onclick="movePage(${i});">${i}</a>`
+                : `<span class="on">${i}</span>`
+      }
+      html += '</p>';
+
+      // 다음 페이지, 마지막 페이지
+      if (pagination.existNextPage) {
+        html += `
+            <a href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next">다음 페이지</a>
+            <a href="javascript:void(0);" onclick="movePage(${pagination.totalPageCount});" class="page_bt last">마지막 페이지</a>
+        `;
+      }
+      document.querySelector('.paging').innerHTML = html;
+    }
+    // 페이지 이동
+    function movePage(page) {
+      const queryParams = {
+        page: (page) ? page : 1,
+        recordSize: 10,
+        pageSize: 10
+      }
+      location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
+    }
+    /*]]>*/
+  </script>
+</th:block>
+
+
+</head>
+
+<body>
+	<div id="container">
+		<header th:replace="header :: header"> </header>
+
+		<main id="findroom_main_con">
+			<div class="findroom_hed">
+				<h2>검색 결과(클릭시 이동)</h2>
+			</div>
+	
+			<div class="findroom_box" id="findroom_box" >
+					
+			</div>
+			<div class="paging">
+				
+			</div>
+
+		</main>
+
+		<footer th:replace="footer ::footer"></footer>
+
+	</div>
+</body>
+
+</html>

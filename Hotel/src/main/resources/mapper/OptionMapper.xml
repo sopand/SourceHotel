@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.mapper.OptionMapper">
+
+	<insert id="AddOption">
+		INSERT INTO opt VALUES(
+		opt_name=#{opt_name},opt_date=now(),opt_roomnum=#{opt_roomnum},opt_memberid=#{opt_memberid}
+		)
+	</insert>
+
+
+
+</mapper>

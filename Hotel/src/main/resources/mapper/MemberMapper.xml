@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.mapper.MemberMapper">
+	<resultMap type="com.hotel.model.Member" id="MemberMap">
+		<id property="m_id" column="m_id" /> <!-- Primary Key -->	
+		<result property="m_pwd" column="m_pwd" />
+		<result property="m_name" column="m_name" />
+		<result property="m_tel" column="m_tel" />
+		<result property="m_email" column="m_email" />
+		<result property="m_address" column="m_address" />
+		<result property="m_grade" column="m_grade" />	
+		<result property="m_type" column="m_type" />	
+	</resultMap>
+
+<insert id="MemberAdd" parameterType="com.hotel.model.Member">
+	INSERT INTO member (m_id,m_pwd,m_name,m_tel,m_email,m_address)
+	VALUES(#{m_id},#{m_pwd},#{m_name},#{m_tel},#{m_email},#{m_address})
+</insert>
+
+<select id="FindID" resultMap="MemberMap" >
+	SELECT * FROM member WHERE m_id=#{m_id}
+</select>
+</mapper>

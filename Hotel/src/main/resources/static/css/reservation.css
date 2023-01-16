@@ -1,0 +1,202 @@
+@font-face {
+    font-family: 'KorailRoundGothicBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KorailRoundGothicBold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+#container {
+	position:relative;
+	width:100%;
+	height:1000px;
+	display:flex;
+	align-items: center;
+	flex-direction:column;
+	justify-content:center;
+}
+#reservation_main_con{
+	font-family: 'KorailRoundGothicBold';
+	width:100%;
+	height:800px;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+}
+#reservation_box{
+	width:1000px;
+	height:600px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border:1px solid #e2e2e2;
+}
+
+.reservation_form{
+	width:100%;
+	height:600px;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+}
+#reservation_img {
+	position:relative;
+	width:500px;
+	height:600px;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	border:1px solid #e2e2e2;
+}
+
+#prev_btn {
+	left: 33px;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	color: rgb(68, 68, 68);
+	z-index: 1;
+}
+
+#prev_btn span {
+	width: 100%;
+	height: 100%;
+	font-size: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+}
+
+#next_btn {
+	right: 20px;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	color: rgb(68, 68, 68);
+	z-index: 1;
+}
+
+#next_btn span {
+	width: 100%;
+	height: 100%;
+	font-size: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.slider {
+	overflow: hidden;
+	width: 400px;
+	height: 500px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.slider li {
+	width: 400px;
+	height: 500px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.sli_img {
+	width: 400px;
+	height: 500px;
+}
+
+#reservation_tag{
+	width:500px;
+	height:600px;
+	flex-direction:column;
+	display:flex;
+	align-items:flex-start;
+	justify-content: flex-start;
+	
+}
+
+.reservation_tag_text{
+	margin:20px;
+	
+}
+
+.reservation_btn{
+	width:450px;
+	display:flex;
+	justify-content:flex-end;
+	align-items:center;
+	
+	height:100px;
+}
+.reservation_btn button{
+	margin:10px;
+	border:1px solid black;
+	width:100px;
+	height: 30px;
+}
+
+
+
+/*===================================Modal==================================*/
+
+.modal_form{
+	display:none;
+	justify-content:center;
+	flex-direction:column;
+	align-items:center;
+	width:700px;
+	height: 800px;
+	position:absolute;
+	background:#fff;
+	z-index: 2;
+	border-radius:8px;
+	box-shadow: 0 0 10px #000;
+}
+.modal_chkbox{	
+	display:flex;
+	align-items:center;
+	justify-content:space-around;
+	width:600px;
+	height: 150px;		
+}
+.modal_chkbox label{
+	position: relative;	
+	width:200px;
+	height: 150px;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	cursor: pointer;
+}
+.modal_chkbox label img{
+	width:200px;
+	height:100px;
+}
+.modal_chkbox label span{
+	position:absolute;
+	z-index:2;
+	top:10px;
+	font-size: 18px;
+	font-weight:bold;	
+}
+.modal_btn{
+	width:100%;
+	height: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.modal_btn button{
+	border-radius: 10px;
+	margin-right:50px;
+	width:100px;
+	height: 30px;
+	border:2px solid #e2e2e2;
+}
+
+
+
+

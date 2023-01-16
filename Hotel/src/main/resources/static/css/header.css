@@ -1,0 +1,54 @@
+
+@font-face {
+    font-family: 'neon';
+    src: url('/font/HeirofLightBold.ttf') format('truetype');
+}
+#hed_con{
+    font-family: 'neon';
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border-bottom: 1px solid #e2e2e2;
+}
+.hed_menu_box{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+.hed_menu_box a{
+    margin: 30px;
+}
+.hed_logo_box{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+.hed_logo_box a{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.hed_text_box{
+    
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.hed_text_box a{
+    margin: 10px;
+
+}

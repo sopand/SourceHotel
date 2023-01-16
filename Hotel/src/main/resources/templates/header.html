@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	 <header id="hed_con" th:fragment="header">
+            <div class="hed_menu_box">
+                <a href="#">예약</a>
+                <a href="#">고객문의</a>
+                <a href="#">호텔 찾기</a>
+            </div>
+            <div class="hed_logo_box">
+                <a th:href="@{/index}">
+                <h1>GLAD</h1>
+                <h1>HOTEL&RESORTS</h1>
+            </a>
+            </div>
+            <div class="hed_text_box">
+                <a th:href="@{/users}">로그인</a>
+                <a href="#">예약확인</a>
+            </div>
+        </header>
+</body>
+</html>

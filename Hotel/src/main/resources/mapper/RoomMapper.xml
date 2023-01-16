@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.mapper.RoomMapper">
+
+	<resultMap type="com.hotel.model.Room" id="RoomMap">
+		<id property="room_num" column="room_num" /> <!-- id에는 프라이머리키 -->
+		<result property="room_location" column="room_location" />
+		<result property="room_origimg" column="room_origimg" />
+		<result property="room_img" column="room_img" />
+		<result property="room_name" column="room_name" />
+		<result property="room_person" column="room_person" />
+		<result property="room_type" column="room_type" />
+		<result property="room_price" column="room_price" />
+	</resultMap>
+
+	<resultMap type="com.hotel.model.Reservation"
+		id="ReserVationMap">
+		<id property="res_num" column="res_num" />
+		<result property="res_city" column="res_city" />
+		<result property="res_buyer" column="res_buyer" />
+		<result property="res_checkin" column="res_checkin" />
+		<result property="res_checkout" column="res_checkout" />
+		<result property="res_roomnum " column="res_roomnum " />
+		<result property="res_adult" column="res_adult" />
+		<result property="res_child " column="res_child " />
+		<result property="res_baby" column="res_baby" />
+	</resultMap>
+
+	<insert id="AddRoom" parameterType="com.hotel.mapper.RoomMapper">
+		INSERT INTO room VALUES (
+		0,#{room_location},#{room_origimg},#{room_img},#{room_name},#{room_person},#{room_type},#{room_price}
+		)
+	</insert>
+
+	<select id="FindRoom" parameterType="com.hotel.model.SearchDto" resultMap="RoomMap">
+		SELECT * FROM
+		room LIMIT
+		#{pagination.limitStart},#{recordSize}
+	</select>
+	<select id="RoomDetail" parameterType="int" resultMap="RoomMap">
+		SELECT * FROM
+		room WHERE room_num=#{room_num}
+	</select>
+	<select id="FindRoomcnt" resultType="int">
+		SELECT COUNT(*) FROM room
+	</select>
+</mapper>

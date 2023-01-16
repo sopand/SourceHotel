@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link th:href="@{/css/header.css}" rel="stylesheet" />
+<link th:href="@{/css/footer.css}" rel="stylesheet" />
+<link th:href="@{/css/login.css}" rel="stylesheet" />
+<link th:href="@{/css/reset2.css}" rel="stylesheet" />
+<link th:href="@{/css/reset.css}" rel="stylesheet" />
+<link th:href="@{/css/slide.css}" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	$(function() {
+		let length = $('.log_img_slider li').length;
+		let width = $('.slider li').width();
+
+		setInterval(function() {
+			$('.log_img_slider li').eq(length - 1).fadeOut(
+					2000,
+					function() {
+						$('.log_img_slider li').eq(length - 1).prependTo(
+								'.log_img_slider');
+						$('.log_img_slider li').eq(0).show('left', 0);
+					});
+		}, 5000)
+
+		$("#next_btn").click(function() {
+			$('.slider').delay(0).animate({
+				marginLeft : '+=' + width
+			}, 1000, function() {
+				$('.slider li:last').prependTo('.slider')
+				$('.slider').css('margin-left', '0');
+			});
+		});
+
+		$("#prev_btn").click(function() {
+			$('.slider').delay(0).animate({
+				marginRight : '+=' + width
+			}, 1000, function() {
+				$('.slider li:first').appendTo('.slider')
+				$('.slider').css('margin-right', '0');
+			});
+		});
+
+		$("#login_btn").click(function() {
+			let id = $("input[name=m_id]").val();
+			let pwd = $("input[name=m_pwd]").val();
+			if (id == null || id == "") {
+				alert("아이디의 값이 공백입니다");
+				return false;
+			}
+			if (pwd == null || pwd == "") {
+				alert("비밀번호의 값이 공백입니다");
+				return false;
+			}
+		});
+
+	});
+</script>
+</head>
+<body>
+
+
+	<div id="container">
+		<header th:replace="header :: header"></header>
+
+		<main id="login_main_con">
+			<div th:replace="slide :: slide"></div>
+
+
+
+
+
+			<div class="login_con">
+				<div class="log_img_box">
+					<span class="sp1">GLAD</span>
+					<span class="sp2">HOTEL&RESORTES</span>
+					<ul class="log_img_slider">
+						<li><img src="/img/imgslide6.jpg" class="log_img"></li>
+						<li><img src="/img/imgslide4.jpg" class="log_img"></li>
+						<li><img src="/img/imgslide3.jpg" class="log_img"></li>
+					</ul>
+
+				</div>
+
+				<div class="login_box">
+					<div class="login_tag">
+						<span>Login</span>
+					</div>
+
+					<form th:action="@{/users/}" th:method="POST"
+						class="login_form">
+						<input type="text" name="m_id" placeholder="ID를 입력하세요" id="m_id">
+						<input type="password" name="m_pwd" placeholder="패스워드를 입력하세요" id="m_pwd">
+						<button type="submit" id="login_btn">로그인</button>
+						<button th:onclick="|location.href='@{/member/}'|" type="button">회원가입</button>
+					</form>
+
+
+				</div>
+			</div>
+
+		</main>
+
+		<footer th:replace="footer ::footer"></footer>
+
+	</div>
+</body>
+</html>
