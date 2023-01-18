@@ -1,0 +1,110 @@
+#container {
+	width: 100%;
+	height: 1000px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#productoption_main_con {
+	width: 100%;
+	height: 800px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.productoption_box {
+	width: 800px;
+	height: 700px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.option_form {
+	width: 800px;
+	height: 300px;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.opt_box {
+	width: 800px;
+	height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	border: 1px solid #e2e2e2;
+}
+
+.opt_tag {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	width: 200px;
+	height: 300px;
+}
+
+.opt_tag input {
+	margin: 2px;
+	border: 2px solid #e2e2e2;
+	border-radius: 3px;
+	width: 150px;
+	height: 20px;
+}
+
+.optadd_btn {
+	width: 800px;
+	height: 50px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+#Addoption_btn {
+	margin-right: 20px;
+	width: 150px;
+	height: 30px;
+	border: 3px solid #e2e2e2;
+	font-size: 16px;
+	font-weight: bold;
+	width: 150px;
+}
+
+.file_form {
+	width: 800px;
+	height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.opt_file {
+	width: 800px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#file_btn {
+	width: 800px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#file_btn button{
+	width:150px;
+	height: 30px;
+	font-size: 18px;
+	font-weight: bold;
+	border:3px solid #e2e2e2;
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<title>Insert title here</title>
+
+<link th:href="@{/css/header.css}" rel="stylesheet" />
+<link th:href="@{/css/footer.css}" rel="stylesheet" />
+<link th:href="@{/css/productdetail.css}" rel="stylesheet" />
+<link th:href="@{/css/reset2.css}" rel="stylesheet" />
+<link th:href="@{/css/reset.css}" rel="stylesheet" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/header.js}"></script>
+<script type="text/javascript" th:src="@{/js/productdetail.js}"></script>
+</head>
+
+<body>
+	<div id="container">
+		<header th:replace="header :: header"> </header>
+		<main id="prodetail_main_con">
+
+
+
+
+
+	<div class="prodetail_box">
+				<div class="prodetail_img_box">
+					<div class="prodetail_img">
+						<div class="prodetail_img_mini">
+							<img th:src="|/projectimg/${i.img_name}|" class="mini_img" th:each="i : ${promap['pro'].getImg}"
+								th:if="${i.img_keyword}=='p_img' AND ${i.img_keyword}!=null">
+
+
+						</div>
+						<div class="prodetail_img_big">
+							<img src="" class="big_img">
+						</div>
+					</div>
+					<div class="prodetail_progress">
+						<label class="progress_text">
+							<span>진행 상황</span>
+						</label>
+						<label class="progress_bar">
+
+							<progress th:value="${promap['pro'].getP_sell}" th:max="${promap['max_quantity']}"></progress>
+							<span th:text="|${promap['pro'].getP_sell}/${promap['max_quantity']}"></span>
+						</label>
+
+
+						<label class="progress_quantity">
+							<span th:text="|공구 시작일:${promap['pro'].getP_recruitdate}|">시작일: </span>
+							<span th:text="|공구 마감일:${promap['pro'].getP_duedate}|">마감일: </span>
+						</label>
+
+
+						<label class="progress_quantity">
+							<span th:each="quantity, Stat:${promap['pro'].getDiscount}" th:text="|${Stat.count}차 할인:${quantity.dis_quantity}개|">1차 할인:20개</span>
+						</label>
+						<label class="progress_quantity">
+							<span th:each="count , Stat:${promap['pro'].getDiscount}" th:text="|${Stat.count}차 할인율:${count.dis_count}%|">1차 할인:20개</span>
+						</label>
+						<label class="progress_sail">
+							<span th:text="|현재 할인 적용:${promap['Now_Discount']}%|">현재 할인 적용: 20%</span>
+						</label>
+
+					</div>
+				</div>
+
+
+
+
+
+
+				<div class="prodetail_text_box">
+					<div class="prodetail_text text1">
+						<span th:text="|제품명: ${promap['pro'].getP_name}|"></span>
+						<a href="#">
+							<span class="material-symbols-outlined"> favorite </span>
+						</a>
+
+					</div>
+					<div class="prodetail_text price_text">
+						<span class="price" th:text="|${#numbers.formatInteger(promap['pro']['p_price'], 3, 'COMMA') + '원'}|"></span>
+						<span class="disprice" th:text="${#numbers.formatInteger(promap['discount_price'], 3, 'COMMA') + '원'}"></span>
+					</div>
+					<div class="prodetail_text">
+						<span th:text="|판매자:${promap['pro'].getP_nickname_m_fk}|"></span>
+					</div>
+
+
+
+
+					<div class="prodetail_text text2">
+						<input type="hidden" th:value="${promap['pro'].getP_id}" id="p_id">
+						<select name="opt_option1" class="option1">
+							<option th:value="${opt1}" th:each="opt1 : ${promap['opt_option1']}" th:if=" ${promap['opt_option1']}!=null" th:text="${opt1}"></option>
+						</select>
+					</div>
+					<div class="prodetail_text text2">
+						<select name="opt_option2" class="option2">
+						</select>
+					</div>
+
+					<form class="prodetail_btn_box">
+						<select name="order_quantity">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+						</select>
+						<button type="button" id="addCart">장바구니 추가</button>
+						<button type="button" id="addOrder">구매하기</button>
+
+						<input type="hidden" th:value="${promap['pro'].getP_recruitdate}" id="p_recruitdate" readonly>
+						<input type="hidden" th:value="${promap['pro'].getP_duedate}" id="p_duedate" readonly>
+					</form>
+					<div class="time_box">
+						<h1 id="time"></h1>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="detail_content_box">
+				<div class="box" th:each="i : ${promap['pro'].getImg}" th:if="${i.img_keyword}=='p_contentimg' AND ${i.img_keyword}!=null">
+					<img th:src="|/projectimg/${i.img_name}|">
+				</div>
+
+			</div>
+
+
+
+		</main>
+
+		<footer th:replace="footer ::footer"></footer>
+
+	</div>
+
+
+</body>
+
+</html>
